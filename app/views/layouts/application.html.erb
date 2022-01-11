@@ -12,6 +12,9 @@
 
   <body class="bg-gray-50">
 
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    
     <% flash.each do |message_type, message| %>
         <%= render 'shared/alert', type: message_type, message: message %>
     <% end %>

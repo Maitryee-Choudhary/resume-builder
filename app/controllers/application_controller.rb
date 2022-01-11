@@ -1,12 +1,17 @@
 class ApplicationController < ActionController::Base
-    include SessionsHelper
+  protect_from_forgery with: :exception
 
-    # Confirms a logged-in user.
-    def logged_in_user
-        unless logged_in?
-          flash[:danger] = "Please log in."
-          redirect_to login_url
-        end
+  helper_method :current_user
+  
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
+  # ----- add these lines here: -----
+
+    # authroize method redirects user to login page if not logged in:
+    def authorize
+      redirect_to login_path, alert: 'You must be logged in to access this page.' if current_user.nil?
     end
 
 end
